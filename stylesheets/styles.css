@@ -1,0 +1,234 @@
+:root {
+  --ink: #17211d;
+  --accent: #557b32;
+  --line: #e9ebe6;
+  --font: "Agrave Pro", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font);
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 3px 14px rgba(20, 35, 25, 0.045);
+  backdrop-filter: blur(12px);
+}
+
+.navigation {
+  display: flex;
+  width: min(100%, 1200px);
+  height: 72px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.brand {
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.35px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-links a {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  padding: 0 17px;
+  border-radius: 5px;
+  color: #555d57;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background-color 0.18s, color 0.18s;
+}
+
+.nav-links a:hover {
+  background: #f3f5ef;
+  color: var(--accent);
+}
+
+.nav-links a[aria-current="page"] {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .navigation {
+    height: 64px;
+    padding: 0 20px;
+  }
+
+  .brand {
+    font-size: 14px;
+  }
+
+
+  .menu-toggle {
+    display: flex;
+    width: 42px;
+    height: 42px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--ink);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  .menu-toggle[aria-expanded="true"] span:first-child {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle[aria-expanded="true"] span:last-child {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 63px;
+    right: 0;
+    left: 0;
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    padding: 8px 20px 16px;
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+    box-shadow: 0 8px 12px rgba(20, 35, 25, 0.05);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+  }
+
+  .nav-links.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .nav-links a {
+    height: 46px;
+    padding: 0 12px;
+  }
+
+  .nav-links a[aria-current="page"] {
+    background: #f5f7f1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+
+/* A calm starting layout for the first scroll-reveal example. */
+.intro {
+  display: grid;
+  min-height: 82vh;
+  align-content: center;
+  justify-items: start;
+  width: min(100% - 48px, 960px);
+  margin: 0 auto;
+  padding: 72px 0;
+}
+
+.intro__eyebrow {
+  margin: 0 0 18px;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.intro h1 {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(42px, 8vw, 88px);
+  line-height: 1.03;
+  letter-spacing: -0.055em;
+}
+
+.intro__copy {
+  max-width: 520px;
+  margin: 24px 0 0;
+  color: #59635c;
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.7;
+}
+
+.next-section {
+  display: grid;
+  min-height: 70vh;
+  place-items: center;
+  padding: 48px 24px;
+  background: #f5f7f1;
+  color: var(--accent);
+  text-align: center;
+}
+
+.next-section p {
+  max-width: 700px;
+  margin: 0;
+  font-size: clamp(28px, 5vw, 56px);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+@media (max-width: 640px) {
+  .intro {
+    min-height: 76vh;
+    width: min(100% - 40px, 960px);
+  }
+}
