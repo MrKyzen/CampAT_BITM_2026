@@ -1,6 +1,6 @@
 :root {
-  --ink: #17211d;
-  --accent: #557b32;
+  --ink: #d2ffed;
+  --accent: #d9ffb5;
   --line: #e9ebe6;
   --font: "Agrave Pro", sans-serif;
 }
@@ -9,25 +9,77 @@
   box-sizing: border-box;
 }
 
+html{
+  scroll-behavior: smooth;
+  background: black;
+  overflow-x: clip;
+}
+
 html,
 body {
   min-height: 100%;
   margin: 0;
   color: var(--ink);
   font-family: var(--font);
+  
 }
+
+
+#progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: yellow;
+  z-index: 20;
+  animation: progressBar 1s linear;
+  animation-timeline: scroll();
+}
+
+@keyframes progressBar {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.hero {
+  position: absolute;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  z-index: -1;
+}
+.hero__image {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
+  
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0) 100%);
+}
+
+
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 10;
-  border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 3px 14px rgba(20, 35, 25, 0.045);
+  
+  background: linear-gradient(rgba(0, 0, 0, 0.96), #feffb19c);
+
   backdrop-filter: blur(12px);
 }
 
 .navigation {
+  position: relative;
   display: flex;
   width: min(100%, 1200px);
   height: 72px;
@@ -62,7 +114,7 @@ body {
   align-items: center;
   padding: 0 17px;
   border-radius: 5px;
-  color: #555d57;
+  color: var(--ink);
   font-size: 14px;
   text-decoration: none;
   transition: background-color 0.18s, color 0.18s;
@@ -83,6 +135,24 @@ body {
 }
 
 @media (max-width: 640px) {
+  .hero {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+  }
+
+  .hero__image {
+    height: 100%;
+  }
+
+  .site-header {
+    background: linear-gradient(rgba(0, 0, 0, 0.96), rgba(0, 0, 0, 0.88));
+  }
+
   .navigation {
     height: 64px;
     padding: 0 20px;
@@ -94,29 +164,59 @@ body {
 
 
   .menu-toggle {
+    position: relative;
+    z-index: 12;
     display: flex;
-    width: 42px;
-    height: 42px;
-    flex-direction: column;
+    width: 44px;
+    height: 44px;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    background: #fff;
+    flex: 0 0 44px;
+    padding: 0;
+    border: 1px solid rgba(210, 255, 237, 0.35);
+    border-radius: 50%;
+    background: rgba(210, 255, 237, 0.08);
     cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  .menu-toggle:hover {
+    border-color: var(--accent);
+    background: rgba(217, 255, 181, 0.14);
+  }
+
+  .menu-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
 
   .menu-toggle span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
     width: 18px;
     height: 2px;
     border-radius: 2px;
     background: var(--ink);
-    transition: transform 0.2s, opacity 0.2s;
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s ease, opacity 0.15s ease;
+  }
+
+  .menu-toggle span:first-child {
+    transform: translate(-50%, calc(-50% - 7px));
+  }
+
+  .menu-toggle span:nth-child(2) {
+    transform: translate(-50%, -50%);
+  }
+
+  .menu-toggle span:last-child {
+    transform: translate(-50%, calc(-50% + 7px));
   }
 
   .menu-toggle[aria-expanded="true"] span:first-child {
-    transform: translateY(7px) rotate(45deg);
+    transform: translate(-50%, -50%) rotate(45deg);
   }
 
   .menu-toggle[aria-expanded="true"] span:nth-child(2) {
@@ -124,12 +224,12 @@ body {
   }
 
   .menu-toggle[aria-expanded="true"] span:last-child {
-    transform: translateY(-7px) rotate(-45deg);
+    transform: translate(-50%, -50%) rotate(-45deg);
   }
 
   .nav-links {
     position: absolute;
-    top: 63px;
+    top: 100%;
     right: 0;
     left: 0;
     display: flex;
@@ -138,9 +238,9 @@ body {
     align-items: stretch;
     gap: 2px;
     padding: 8px 20px 16px;
-    border-bottom: 1px solid var(--line);
-    background: #fff;
-    box-shadow: 0 8px 12px rgba(20, 35, 25, 0.05);
+    border-bottom: 1px solid rgba(210, 255, 237, 0.2);
+    background: rgba(0, 0, 0, 0.96);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-6px);
@@ -159,7 +259,12 @@ body {
   }
 
   .nav-links a[aria-current="page"] {
-    background: #f5f7f1;
+    background: rgba(217, 255, 181, 0.1);
+  }
+
+  .nav-links a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--accent);
   }
 }
 
@@ -172,7 +277,7 @@ body {
   }
 }
 
-/* A calm starting layout for the first scroll-reveal example. */
+/* Intro */
 .intro {
   display: grid;
   min-height: 82vh;
@@ -181,6 +286,7 @@ body {
   width: min(100% - 48px, 960px);
   margin: 0 auto;
   padding: 72px 0;
+  text-shadow: 0 5px 12px rgba(0, 0, 0, 0.81);
 }
 
 .intro__eyebrow {
@@ -190,6 +296,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  text-shadow: 50px 50px 12px rgba(0, 0, 0, 0.81);
 }
 
 .intro h1 {
@@ -200,35 +307,155 @@ body {
   letter-spacing: -0.055em;
 }
 
-.intro__copy {
-  max-width: 520px;
-  margin: 24px 0 0;
-  color: #59635c;
-  font-size: clamp(16px, 2vw, 19px);
-  line-height: 1.7;
+@media (max-width: 640px) {
+  .intro {
+    min-height: calc(100svh - 64px);
+    width: min(calc(100% - 36px), 960px);
+    padding: 44px 0;
+  }
+
+  .intro__eyebrow {
+    margin-bottom: 14px;
+    font-size: 12px;
+  }
+
+  .intro h1 {
+    max-width: 100%;
+    font-size: clamp(40px, 10vw, 64px);
+    letter-spacing: -0.045em;
+  }
+
 }
 
-.next-section {
-  display: grid;
-  min-height: 70vh;
-  place-items: center;
-  padding: 48px 24px;
-  background: #f5f7f1;
-  color: var(--accent);
-  text-align: center;
+
+
+.intro_reveal{
+  animation: fadeInUp linear 1s;
+
 }
 
-.next-section p {
-  max-width: 700px;
-  margin: 0;
-  font-size: clamp(28px, 5vw, 56px);
-  line-height: 1.15;
-  letter-spacing: -0.04em;
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+
+
+/* From Uiverse.io by kandalgaonkarshubham */ 
+.container {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+        circle farthest-side at 0% 50%,
+        #282828 23.5%,
+        rgba(255, 170, 0, 0) 0
+      )
+      21px 30px,
+    radial-gradient(
+        circle farthest-side at 0% 50%,
+        #a1000e 24%,
+        rgba(240, 166, 17, 0) 0
+      )
+      19px 30px,
+    linear-gradient(
+        #282828 14%,
+        rgba(240, 166, 17, 0) 0,
+        rgba(240, 166, 17, 0) 85%,
+        #282828 0
+      )
+      0 0,
+    linear-gradient(
+        150deg,
+        #282828 24%,
+        #a1000e 0,
+        #a1000e 26%,
+        rgba(240, 166, 17, 0) 0,
+        rgba(240, 166, 17, 0) 74%,
+        #a1000e 0,
+        #a1000e 76%,
+        #282828 0
+      )
+      0 0,
+    linear-gradient(
+        30deg,
+        #282828 24%,
+        #a1000e 0,
+        #a1000e 26%,
+        rgba(240, 166, 17, 0) 0,
+        rgba(240, 166, 17, 0) 74%,
+        #a1000e 0,
+        #a1000e 76%,
+        #282828 0
+      )
+      0 0,
+    linear-gradient(90deg, #a1000e 2%, #282828 0, #282828 98%, #a1000e 0%) 0 0
+      #282828;
+  background-size: 40px 60px;
+}
+
+
+.appear-with-scroll{
+  animation: fadeInup both;
+  animation-timeline: view();
+  animation-range: 10% 20%;
+}
+
+
+@keyframes fadeInup {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+#campus-stories {
+  width: min(100% - 48px, 960px);
+  margin: 0 auto;
+  padding: 72px 0;
 }
 
 @media (max-width: 640px) {
-  .intro {
-    min-height: 76vh;
-    width: min(100% - 40px, 960px);
+  #campus-stories {
+    width: min(calc(100% - 36px), 960px);
+    padding: 48px 0;
+  }
+
+  #campus-stories h2 {
+    font-size: clamp(28px, 8vw, 44px);
+    line-height: 1.1;
+  }
+
+  #campus-stories p {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .appear-with-scroll {
+    animation-name: fadeInupMobile;
+  }
+
+  @keyframes fadeInupMobile {
+    from {
+      opacity: 0;
+      transform: translateX(8vw);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 }
+
